@@ -192,7 +192,7 @@ app.post("/sign-in", (req,res) => {
 
 })
 
-const PORT_NO = 3000;
+const PORT_NO = process.env.PORT || 3000;
 app.listen(3000, () => {
 
     console.log(`Web Server listening on PORT NO: ${PORT_NO}`);
