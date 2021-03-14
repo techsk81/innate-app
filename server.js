@@ -1,12 +1,9 @@
 const express = require('express');
 const exphbs  = require('express-handlebars');
-
-const bodyParser = require('body-parser')
-
-
-const database = require("./model/moviesAndTVShowsDB.js");
+const bodyParser = require('body-parser');
 
 const app = express();
+const database = require("./model/moviesAndTVShowsDB.js");
 
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
@@ -16,6 +13,8 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }))
 
 require('dotenv').config({ path: 'config/keys.env'});
+
+// GET REQUESTS
 
 app.get("/", (req,res) => {
 
@@ -73,6 +72,8 @@ app.get("/dashboard", (req, res) => {
 
     res.render("dashboard");
 })
+
+// POST REQUESTS
 
 app.post("/register", (req,res) => {
 
