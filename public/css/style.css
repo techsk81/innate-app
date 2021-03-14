@@ -71,7 +71,6 @@ html, body {
   /*FOOTER*/
 
   .footer {
-
     background: black;
     color: white;
     height: 360px;
@@ -106,6 +105,27 @@ html, body {
     font-size: 17px;
     border: white;
   }
+
+   /*Phones*/
+@media only screen and (min-width: 600px) {
+  .footer {
+    background-color: black;
+  }
+}
+
+/*tablets*/
+@media only screen and (min-width: 768px) {
+  .footer {
+    background-color: black;
+  }
+}
+
+/*desktops*/
+@media only screen and (min-width: 992px) {
+  .footer {
+    background-color: black;
+  }
+}
 
   /*SLIDER*/
 
