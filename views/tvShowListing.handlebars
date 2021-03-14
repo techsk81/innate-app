@@ -1,0 +1,22 @@
+<div class="tvShowPage">
+
+    <div class="tvShow">
+        <div class="tvShow-menu">
+            <p class="tvShow-main-title">TV Shows</p>
+        </div>
+
+        <div class="tvShow-container">
+            {{#each tvShows}}
+            <div class="tvShow-box">
+                <p class="tvShow-titles">{{this.title}}</p>
+            
+             <div class="tvShow-image">
+                 <a href="/tvShows-list/{{this.id}}"><img src="{{this.smallPoster}}" alt="" 
+                 width="180" height="280"> </a>  
+            </div>
+            </div>
+           {{/each}}
+        </div>
+    </div>
+</div>
+

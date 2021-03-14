@@ -1,0 +1,30 @@
+<div class="tvShow-details-container">
+
+    <div class="detail-tvShow-img">
+        <a href="/movies-list/{{tvShow.id}}"><img src="{{tvShow.smallPoster}}" alt="" 
+                 width="300" height="400"> </a>
+    </div>
+
+    <div class="tvShow-details">
+        <h3>{{tvShow.title}}</h3>
+        Synopsis: {{tvShow.synopsis}}
+    </div>   
+
+    <div>
+        <button class="tvShow-button button3">
+            Buy ${{tvShow.price}}
+        </button>
+        <button class="tvShow-button button4">
+            Rent ${{tvShow.rentalPrice}}
+        </button>
+    </div>
+
+    <div class="detail-tvShow-img-large">
+          <a href="/movies-list/{{tvShow.id}}"><img src="{{tvShow.largePoster}}" alt="" 
+          width="350" height="200"></a>
+    </div>
+</div>
+
+
+
+
