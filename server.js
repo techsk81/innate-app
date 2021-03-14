@@ -88,7 +88,7 @@ app.post("/register", (req,res) => {
 
     const {firstNameR, lastNameR, emailR, passwordR} = req.body;
 
-    if(firstNameR === "") {
+    if(firstNameR == "") {
 
         fNameError.push("You must enter your first name.");
     }
@@ -99,13 +99,13 @@ app.post("/register", (req,res) => {
 
     }
 
-    if(lastNameR === "") {
+    if(lastNameR == "") {
 
         lNameError.push("You must enter your last name.");
     }
 
 
-    if(emailR === "") {
+    if(emailR == "") {
 
         emailRError.push("You must enter an email.");
     }
@@ -165,12 +165,12 @@ app.post("/sign-in", (req,res) => {
 
     const {email, password} = req.body;
 
-    if(email === "") {
+    if(email == "") {
 
         emailError.push("You must enter an email.");
     }
 
-    if(password === "") {
+    if(password == "") {
 
         passwordError.push("You must enter the password.");
     }
