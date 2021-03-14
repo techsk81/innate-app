@@ -192,8 +192,7 @@ app.post("/sign-in", (req,res) => {
 
 })
 
-const PORT_NO = process.env.PORT || 3000;
-app.listen(3000, () => {
-
-    console.log(`Web Server listening on PORT NO: ${PORT_NO}`);
+const PORT  = process.env.PORT ||  3000;
+app.listen(PORT, ()=>{
+    console.log("Web Server is running...");
 })
