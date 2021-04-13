@@ -1,32 +1,32 @@
 <section id="register-section">
-<form action="/register" method="POST">
+<form method="POST" action="/user/register">
 
     <div class="register_container">
 
         <h1>Create a New Account</h1>
 
-        <input type="text1" placeholder="First name" name="firstNameR" value={{fNameV}}>
+        <input type="text1" placeholder="First name" name="firstName" value={{fNameV}}>
         <span class="first-name-error">
          {{#each fNameErrorMessage}}
             {{this}}    
         {{/each}}
         </span>
 
-        <input type="text2" placeholder="Last name" name="lastNameR" value={{lNameV}}>
+        <input type="text2" placeholder="Last name" name="lastName" value={{lNameV}}>
         <span class="last-name-error">
          {{#each lNameErrorMessage}}
             {{this}}    
         {{/each}}
         </span>
 
-        <input type="text" placeholder="Email" name="emailR" value={{emailV}}>
+        <input type="text" placeholder="Email" name="email" value={{emailV}}>
         <span class="email-register-error">        
          {{#each emailRErrorMessage}}
             {{this}}    
         {{/each}}
         </span>
 
-        <input type="text" placeholder="Password" name="passwordR" value={{passwordV}}>
+        <input type="text" placeholder="Password" name="password" value={{passwordV}}>
         <span class="password-register-error">        
          {{#each passwordRErrorMessage}}
             {{this}}    

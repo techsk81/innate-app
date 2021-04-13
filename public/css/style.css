@@ -413,6 +413,12 @@ html, body {
     padding-left: 30px; 
   }
 
+  .rating {
+    margin: 0; 
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
   .detail-movie-img {
     display: block;
   }

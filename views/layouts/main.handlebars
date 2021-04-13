@@ -14,11 +14,17 @@
             <img src="/images/INNATE.jpg" class="img-fluid">
         </div></a>
         <a class="active" href="/">Home</a>
-        <a href="/movies-list">Movies</a>
+        <a href="/movies/movies-list-user">Movies</a>
         <a href="/tvshows-list">TV Shows</a>
     <div class="topnav-right">
-            <a href="/sign-in">Login</a>
-            <a href="/register">Sign Up</a>
+        {{#if user}}
+            <a href="/user/cart" class="cart">Cart</a>
+            <a href="/user/logout">Logout</a>
+        {{else}}
+
+            <a href="/user/login">Login</a>
+            <a href="/user/register">Sign Up</a>
+        {{/if}}    
     </div>  
     </div>
     </header>

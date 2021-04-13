@@ -1,0 +1,30 @@
+<div class="movie-details-container">
+    <div class="detail-movie-img">
+        <img src="/uploads/{{this.smallPoster}}" alt="{{this.title}}" 
+                 width="300" height="400"> 
+    </div>
+
+    <div class="movie-details">
+        <h3>{{this.title}}</h3>
+        Synopsis: {{this.synopsis}}  
+    </div>   
+
+     <div class="rating">
+        Rating: {{this.rating}}/5  
+    </div>   
+    <div>
+        <button class="button button1">
+            Buy ${{this.purchasePrice}}
+        </button>
+    
+        <button class="button button2">
+            Rent ${{this.rentalPrice}}
+        </button>
+    </div>
+
+    <div class="detail-movie-img-large">
+          <img src="/uploads/{{this.largePoster}}" alt="{{this.title}}" 
+          width="570" height="400">
+    </div>
+
+</div>

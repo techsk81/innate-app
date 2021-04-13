@@ -1,46 +1,29 @@
 const express = require('express');
 const exphbs  = require('express-handlebars');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
+const session = require('express-session');
 
+require('dotenv').config({ path: 'config/keys.env'});
+
+const generalRoutes = require("./controllers/General");
+const userRoutes = require("./controllers/User");
+const movieRoutes = require("./controllers/Movie");
 const app = express();
-const database = require("./model/moviesAndTVShowsDB.js");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static("public"));
 
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
-app.use(express.static("public"));
-
-app.use(bodyParser.urlencoded({ extended: false }))
-
-require('dotenv').config({ path: 'config/keys.env'});
-
 // GET REQUESTS
 
-app.get("/", (req,res) => {
 
-    res.render("index", {
-        featuredMovies : database.getAllMovies(),
-        featuredTVShows : database.getAllTVShows()
-    })
-})
 
-app.get("/movies-list", (req,res) => {
-
-    res.render("movieListing", {
-        title : "movieListing",
-        movies: database.getAllMovies()
-    })
-})
-
-app.get("/movies-list/:id", (req,res) => {
-
-    res.render("movieDescription",{
-        movie : database.getAMovie(req.params.id)
-    })
-
-})
-
-app.get("/tvshows-list", (req,res) => {
+/*app.get("/tvshows-list", (req,res) => {
 
     res.render("tvShowListing", {
         title : "tvShowListing",
@@ -54,145 +37,52 @@ app.get("/tvshows-list/:id", (req,res) => {
         tvShow : database.getATVShow(req.params.id)
     })
 
-})
-
-app.get("/register", (req,res) => {
-
-    res.render("register");
-
-})
-
-app.get("/sign-in", (req,res) => {
-
-    res.render("sign-in");
-
-})
-
-app.get("/dashboard", (req, res) => {
-
-    res.render("dashboard");
-})
+})*/
 
 // POST REQUESTS
 
-app.post("/register", (req,res) => {
+app.use((req,res,next) => {
 
-    const fNameError = [];
-    const lNameError = [];
-    const emailRError = [];
-    const passwordRError = [];
+    if(req.query.method == "PUT") {
 
-    const nameRegex = /^.{5,30}$/;
+        req.method = "PUT";
 
-    const passwordRegex = /(?:[A-Z].*[0-9])|(?:[0-9].*[A-Z])/;
+    } else if(req.query.method == "DELETE") {
 
-    const {firstNameR, lastNameR, emailR, passwordR} = req.body;
-
-    if(firstNameR == "") {
-
-        fNameError.push("You must enter your first name.");
+        req.method = "DELETE";
     }
 
-    if(!nameRegex.test(firstNameR)) {
-
-        fNameError.push("First name must be between 5 and 30 charcters long.");
-
-    }
-
-    if(lastNameR == "") {
-
-        lNameError.push("You must enter your last name.");
-    }
-
-
-    if(emailR == "") {
-
-        emailRError.push("You must enter an email.");
-    }
-
-    if (passwordR == "") {
-
-        passwordRError.push("You must enter a password.");
-    }
-
-    if(!passwordRegex.test(passwordR)) {
-
-        passwordRError.push("Password must include at least 1 number and 1 capital letter.");
-    }
-
-    if(fNameError.length > 0 || lNameError.length > 0 || emailRError.length > 0 || passwordRError.length > 0) {
-
-        res.render("register", {
-            fNameErrorMessage: fNameError,
-            lNameErrorMessage: lNameError,
-            emailRErrorMessage: emailRError,
-            passwordRErrorMessage: passwordRError,
-            fNameV: firstNameR,
-            lNameV: lastNameR,
-            emailV: emailR,
-            passwordV: passwordR
-        });
-
-    } else {
-        const sgMail = require('@sendgrid/mail')
-        sgMail.setApiKey(process.env.SEND_GRID_KEY)
-        const msg = {
-            to: `${emailR}`, // Change to your recipient
-            from: 'shivani_06@hotmail.ca', // Change to your verified sender
-            subject: 'Welcome to Innate!',
-            html: `<strong>Hey ${firstNameR}! We are pleased to have you join the Innate platform of movies and tv shows!<\strong>
-            <br>
-            <br>Enjoy,<br>
-            Innate Team` ,
-        };
-        sgMail.send(msg)
-        .then(()=>{
-            console.log('Email Sent!');
-            res.redirect("/dashboard");
-        })
-        .catch(err=>{
-            console.log(err);
-        })
-    }
-
+    next();
 })
 
+app.use(fileUpload());
 
-app.post("/sign-in", (req,res) => {
+app.use(session({
+    secret: `${process.env.SECRET_KEY}`,
+    resave: false,
+    saveUninitialized: true
+}));
 
-    const emailError = [];
-    const passwordError = [];
+app.use((req,res,next) => {
 
-    const {email, password} = req.body;
+    res.locals.user = req.session.userInfo;
 
-    if(email == "") {
+    next();
+});
 
-        emailError.push("You must enter an email.");
-    }
+//MAPS EXPRESS TO ALL OUR  ROUTER OBJECTS
+app.use("/", generalRoutes);
+app.use("/user", userRoutes);
+app.use("/movies", movieRoutes);
 
-    if(password == "") {
-
-        passwordError.push("You must enter the password.");
-    }
-
-    if(emailError.length > 0 || passwordError.length > 0) {
-
-        res.render("sign-in", {
-            emailErrorMessage: emailError,
-            passwordErrorMessage: passwordError,
-            emailV: email,
-            passwordV: password
-        });
-
-    } else {
-
-        res.redirect("/");
-    }
-
-
+mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true})
+.then(() => {
+    console.log(`Connected to MongoDB Database`);
 })
+.catch(err => console.log(`Error occured when connecting to database ${err}`));
 
-const PORT  = process.env.PORT ||  3000;
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{
     console.log("Web Server is running...");
 })
