@@ -1,26 +1,22 @@
  <h2>Update Movie</h2>
     <form method="POST" action="/movies/update/{{_id}}?method=PUT" enctype="multipart/form-data">
 
-        <!--//synopsis, price, small banner and large banner
--->
         <label>Synopsis</label>
         <input type="text" name="synopsis" id="synopsis" value="{{synopsis}}"> <br><br>
 
+        <label>Rating</label>
+        <input type="text" name="rating" id="rating" value="{{rating}}"> <br><br>
+
         <label>Purchase Price</label>
-        <input type="text" name="pPrice" value="{{purchasePrice}}"> <br><br>
+        <input type="text" name="purchasePrice" value="{{purchasePrice}}"> <br><br>
 
-         <label>Rental Price</label>
-        <input type="text" name="rPrice"value="{{rentalPrice}}"> <br><br>
+        <label>Rental Price</label>
+        <input type="text" name="rentalPrice" value="{{rentalPrice}}"> <br><br>
 
-        <img src="/uploads/{{smallPoster}}" alt="{{smallPoster}}" 
-                 width="180" height="280">
-        <label>Update Small Poster Upload</label>
-        <input type="file" name="smallPoster" id="smallPoster">{{smallPoster}}<br><br>
+        <img src="/uploads/{{largePoster}}" alt="{{largePoster}}" width="350" height="200">
 
-        <img src="/uploads/{{largePoster}}" alt="{{largePoster}}" 
-                 width="350" height="200">
         <label>Update Large Poster Upload</label>
-        <input type="file" name="largePoster" id="largePoster">{{largePoster}}<br><br>
+        <input type="file" name="largePoster" id="largePoster" value="{{largePoster}}"><br><br>
 
         <input type="submit" value="Update Movie">
     </form>

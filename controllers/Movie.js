@@ -166,6 +166,7 @@ router.get("/movies-list/:id", (req,res) => {
 
 });
 
+//add
 router.get("/add", isAuthenticated, (req,res) => {
 
     if (req.session.userInfo.type == "Admin") {
@@ -230,15 +231,15 @@ router.get("/edit/:id", (req, res) => {
     movieModel.findById(req.params.id)
     .then((movie) => {
 
-        const {_id,synopsis, purchasePrice, rentalPrice, smallPoster, largePoster} = movie;
+        const {_id,synopsis, rating, purchasePrice, rentalPrice, largePoster} = movie;
 
         res.render("Movies/movieEditForm", {
 
             _id,
             synopsis,
+            rating,
             purchasePrice,
             rentalPrice,
-            smallPoster,
             largePoster
         })
 
@@ -251,36 +252,18 @@ router.put("/update/:id", (req,res) => {
     const movie = {
 
         synopsis: req.body.synopsis,
+        rating: req.body.rating,
         purchasePrice: req.body.purchasePrice,
         rentalPrice: req.body.rentalPrice,
-        smallPoster: req.body.smallPoster,
-        largePoster: req.body.largePoster
+        largePoster: req.files.largePoster.name
     }
 
     movieModel.updateOne({_id: req.params.id}, movie)
     .then(() => {
 
-        req.files.smallPoster.name = `small_poster_${movie._id}${path.parse(req.files.smallPoster.name).ext}`
-        req.files.smallPoster.mv(`public/uploads/${req.files.smallPoster.name}`)
+    
+        res.redirect("/Movies/movies-list-admin");
 
-        req.files.largePoster.name = `large_poster_${movie._id}${path.parse(req.files.largePoster.name).ext}`
-        req.files.largePoster.mv(`public/uploads/${req.files.largePoster.name}`)
-
-        .then(() => {
- 
-            movieModel.updateOne({_id: movie._id}, {
-                smallPoster: req.files.smallPoster.name,
-                largePoster: req.files.largePoster.name
-            })
-            .then(() => {
-                res.redirect("/Movies/movies-list-admin");
-
-            })
-            .catch(err=>console.log(`Error while inserting into the data ${err}`));
-
-         })
-       //res.redirect("/Movies/movies-list-admin");
-       //res.redirect("/User/adminDashboard");
     })
     .catch(err=>console.log(`Error occurred when updating data from the database : ${err}`));    
 
@@ -292,7 +275,6 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
     movieModel.deleteOne({_id: req.params.id})
     .then(() => {
         res.redirect("/Movies/movies-list-admin");
-        //res.redirect("/User/adminDashboard");
 
     })
     .catch(err=>console.log(`Error occurred when deleting data from the database : ${err}`));    
