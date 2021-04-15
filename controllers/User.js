@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const userModel = require("../models/User");
+const cartModel = require("../models/Cart");
 
 const bcrypt = require('bcryptjs');  
 const isAuthenticated = require("../middleware/auth");
@@ -174,14 +175,14 @@ router.post("/login", (req,res) => {
         userModel.findOne({email: req.body.email})
         .then( user => {
     
-            const errors = [];
+            const errorLogin = [];
     
             //email not found
             if(user == null) {
     
-                errors.push("Sorry, your email and/or password is incorrect");
+                errorLogin.push("Sorry, your email and/or password is incorrect");
                 res.render("User/login", {
-                    errors
+                    errorLogin
                 })
     
             //email is found    
@@ -200,9 +201,9 @@ router.post("/login", (req,res) => {
     
                     } else {
     
-                        errors.push("Sorry, your email and/or password is incorrect");
+                        errorLogin.push("Sorry, your email and/or password is incorrect");
                         res.render("User/login", {
-                            errors
+                            errorLogin
                         })
     
                     }

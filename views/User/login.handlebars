@@ -5,6 +5,10 @@
 
         <h1>Log In to Innate</h1>
 
+         {{#each errorLogin}}
+            {{this}}
+        {{/each}}    
+
         <input type="email-text" placeholder="Email" name="email" value={{emailV}}>
         <span class="password-error">
         {{#each emailErrorMessage}}
