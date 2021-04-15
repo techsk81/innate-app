@@ -378,6 +378,22 @@ html, body {
     font-weight:bold;
   }
 
+  .search-container {
+    width: 50px;
+    margin-right: 100px;
+  }
+
+  .search-container button {
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+  }
+  
+
   /*Phones*/
 @media only screen and (min-width: 600px) {
   .movie-container {

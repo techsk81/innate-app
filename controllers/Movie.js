@@ -199,6 +199,8 @@ router.post("/add", isAuthenticated, (req,res) => {
     movie.save()
     .then((movie) => {
 
+        if(req.files.smallPoster.mimetype == "imag/jpeg" || req.files.smallPoster.mimetype == "imag/png" ||
+        req.files.smallPoster.mimetype == "imag/gif" || path.parse(req.files.smallPoster.name).ext == "imag/jpg") {
         //small poster
         req.files.smallPoster.name = `small_poster_${movie._id}${path.parse(req.files.smallPoster.name).ext}`
         req.files.smallPoster.mv(`public/uploads/${req.files.smallPoster.name}`)
@@ -213,12 +215,16 @@ router.post("/add", isAuthenticated, (req,res) => {
                 largePoster: req.files.largePoster.name
             })
             .then(() => {
-                //res.redirect(`/Movies/movies-list/${movie._id}`);
                 res.redirect(`/Movies/movies-list-admin`);
             })
             .catch(err=>console.log(`Error while inserting into the data ${err}`));
 
          })
+
+        } else {
+
+            console.log(`Error while uploading image: not an image`);
+        }
 
     })
     .catch(err=>console.log(`Error while inserting into the data ${err}`));
@@ -280,5 +286,36 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
     .catch(err=>console.log(`Error occurred when deleting data from the database : ${err}`));    
 
 });
+
+router.post("/search", (req,res) => {
+    
+    movieModel.find({ title: new RegExp(req.body.searchMovies, 'i') }).lean()
+    .then((movies) => {
+
+        const filteredMovies = movies.map(movie => {
+
+            return {
+
+                id: movie._id,
+                title: movie.title,
+                synopsis: movie.synopsis,
+                category: movie.category,
+                rating: movie.rating,
+                smallPoster: movie.smallPoster,
+                largePoster: movie.largePoster,
+                rentalPrice: movie.rentalPrice,
+                purchasePrice: movie.purchasePrice,
+                type: movie.type,
+                featured: movie.featured
+
+            }
+        });
+
+        res.render("Movies/movieListing", {
+            data: filteredMovies
+        })
+    })
+    .catch((err) => {console.log(`Error happened when pulling from the database: ${err}`);})
+})
 
 module.exports = router;
