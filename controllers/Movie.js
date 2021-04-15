@@ -199,8 +199,10 @@ router.post("/add", isAuthenticated, (req,res) => {
     movie.save()
     .then((movie) => {
 
-        if(req.files.smallPoster.mimetype == "imag/jpeg" || req.files.smallPoster.mimetype == "imag/png" ||
-        req.files.smallPoster.mimetype == "imag/gif" || path.parse(req.files.smallPoster.name).ext == "imag/jpg") {
+        if(req.files.smallPoster.mimetype == "image/jpeg" || req.files.smallPoster.mimetype == "image/png" ||
+        req.files.smallPoster.mimetype == "image/gif" || path.parse(req.files.smallPoster.name).ext == "image/jpg" ||
+        req.files.largePoster.mimetype == "image/jpeg" || req.files.largePoster.mimetype == "image/png" ||
+        req.files.largePoster.mimetype == "image/gif" || path.parse(req.files.largePoster.name).ext == "image/jpg") {
         //small poster
         req.files.smallPoster.name = `small_poster_${movie._id}${path.parse(req.files.smallPoster.name).ext}`
         req.files.smallPoster.mv(`public/uploads/${req.files.smallPoster.name}`)
@@ -288,7 +290,7 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
 });
 
 router.post("/search", (req,res) => {
-    
+
     movieModel.find({ title: new RegExp(req.body.searchMovies, 'i') }).lean()
     .then((movies) => {
 

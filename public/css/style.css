@@ -419,24 +419,28 @@ html, body {
 
   .movie-details-container {
 
-    width: 70%;
+    width: 100%;
     display: flex;
     align-items: center;
   }
 
   .movie-details {
     margin: 0; 
-    padding-left: 30px; 
+    padding-left: 30px;
+    width: 100%;
+
   }
 
   .rating {
     margin: 0; 
-    padding-left: 30px;
+    padding-left: 20px;
     padding-right: 30px;
   }
 
   .detail-movie-img {
     display: block;
+    float: left;
+    margin-right: 10px;
   }
 
   .button {
