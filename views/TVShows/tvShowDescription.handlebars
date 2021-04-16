@@ -1,25 +1,34 @@
 <div class="tvShow-details-container">
     <div class="detail-tvShow-img">
-        <a href="/movies-list/{{tvShow.id}}"><img src="{{tvShow.smallPoster}}" alt="" 
+        <img src="/uploads/{{smallPoster}}" alt="{{title}}" 
                  width="300" height="400"> </a>
     </div>
 
     <div class="tvShow-details">
-        <h3>{{tvShow.title}}</h3>
-        Synopsis: {{tvShow.synopsis}}
+        <h3>{{this.title}}</h3>
+        Synopsis: {{synopsis}}
+    </div> 
+
+    <div class="rating">
+        Rating: {{rating}}/5  
     </div>   
 
-    <div>
-        <button class="tvShow-button button3">
-            Buy ${{tvShow.price}}
-        </button>
-        <button class="tvShow-button button4">
-            Rent ${{tvShow.rentalPrice}}
-        </button>
-    </div>
+
+       <form action="/tvshows/add-to-cart" method="POST"> 
+        <input type="hidden" name="_id" value="{{_id}}">
+        <input type="hidden" name="title" value="{{title}}">
+        <input type="hidden" name="price" value="{{purchasePrice}}">
+        <input type="hidden" name="price" value="{{rentalPrice}}">
+
+        <input class="button button1" type="submit"
+        value="Buy ${{purchasePrice}}">
+        
+         <input class="button button2" type="submit"
+        value="Rent ${{rentalPrice}}">               
+    </form>
 
     <div class="detail-tvShow-img-large">
-          <a href="/movies-list/{{tvShow.id}}"><img src="{{tvShow.largePoster}}" alt="" 
-          width="350" height="200"></a>
+          <img src="/uploads/{{largePoster}}" alt="{{this.title}}" 
+          width="350" height="200">
     </div>
 </div>

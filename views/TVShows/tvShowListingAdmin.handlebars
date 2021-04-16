@@ -1,14 +1,11 @@
-   <div class="search-container">
-                <input type="text" placeholder="Search.." name="searchTVShows">
-                <button type="submit">Submit</button>
-            </form>
-
-    </div>
-
 <div class="tvShowPage">
     <div class="tvShow">
         <div class="tvShow-menu">
             <p class="tvShow-main-title">TV Shows</p>
+        </div>
+
+        <div id="tv-shows-links-holder">
+            <a href="/tvshows/add">Add a TV Show of Choice</a>
         </div>
 
         <div class="tvShow-container">
@@ -19,6 +16,10 @@
              <div class="tvShow-image">
                  <a href="/tvShows-list/{{this.id}}"><img src="{{this.smallPoster}}" alt="" 
                  width="180" height="280"> </a>  
+
+            <a href="/TVShows/edit/{{this.id}}">Edit</a>
+            <a href="/TVShows/delete/{{this.id}}?method=DELETE" class="edit-delete-button">Delete</a>
+
             </div>
             </div>
            {{/each}}
