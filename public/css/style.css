@@ -68,6 +68,13 @@ html, body {
     margin-top: -6px;
   }
 
+  /*HEADER*/
+
+  .header {
+    align-content: center;
+    margin-left: 26%;
+  }
+
   /*FOOTER*/
 
   .footer {
@@ -137,7 +144,8 @@ html, body {
     margin-top: 0px;
     text-align: center;
     overflow: hidden;
-
+    padding-bottom:1.5rem;
+    margin-bottom:1.5rem;
   }
 
   .slides {
@@ -150,6 +158,7 @@ html, body {
     -o-transition: left 2s;
     transition: left 2s;
     
+    
   }
 
   .slide {
@@ -159,6 +168,7 @@ html, body {
     position: relative;
     display: flex;
     flex-direction: row;
+    
   }
 
   #slide1:target ~ .slides {
@@ -378,21 +388,61 @@ html, body {
     font-weight:bold;
   }
 
-  .search-container {
-    width: 50px;
-    margin-right: 100px;
+  .topnav .search-container {
+    float: right;
+    border-radius: 10px;
   }
-
-  .search-container button {
+  
+  .topnav input[type=text] {
     padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+  }
+  
+  .topnav .search-container button {
+    padding: 6px 10px;
     margin-top: 8px;
     margin-right: 16px;
     background: #ddd;
     font-size: 17px;
     border: none;
     cursor: pointer;
+    
   }
+ 
   
+  .movie-links-holder {
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .add-movie-button {
+    color: white;
+    background-color: black;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .add-tv-show-button {
+    color: white;
+    background-color: black;
+    margin-bottom: 20px;
+    padding: 10px;  
+    border-radius: 10px;
+
+
+  }
 
   /*Phones*/
 @media only screen and (min-width: 600px) {
@@ -418,29 +468,29 @@ html, body {
   /*movie description*/
 
   .movie-details-container {
-
     width: 100%;
     display: flex;
     align-items: center;
-  }
+}
 
   .movie-details {
     margin: 0; 
-    padding-left: 30px;
-    width: 100%;
+    padding-left: 20px;
+    width: 30%;
 
   }
 
   .rating {
     margin: 0; 
-    padding-left: 20px;
     padding-right: 30px;
+    margin-right: 5px;
   }
 
   .detail-movie-img {
     display: block;
     float: left;
-    margin-right: 10px;
+    display: flex;
+    margin-bottom: 1rem;
   }
 
   .button {
@@ -464,7 +514,240 @@ html, body {
 
 .detail-movie-img-large {
 
-  margin-left: 30px;
+  margin-left: 10px;
+  width: 40%;
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+/*MOVIE CRUD*/
+.add-movie {
+
+  margin-left: 45%;
+}
+.movie-add input[type=text]{
+
+  margin-left: 10%;
+}
+
+.movie-add .title-label{
+
+  margin-left: 10%;
+}
+
+.movie-add .synopsis-label{
+
+  margin-left: 10%;
+}
+
+.movie-add .category-label{
+
+  margin-left: 10%;
+}
+
+.movie-add .rating-label{
+
+  margin-left: 10%;
+}
+
+.movie-add .purchasePrice-label{
+
+  margin-left: 10%;
+}
+
+.movie-add .rentalPrice-label{
+
+  margin-left: 10%;
+}
+
+.movie-add .type-label{
+
+  margin-left: 10%;
+}
+
+.movie-add .featured-label{
+
+  margin-left: 10%;
+}
+
+.movie-add .small-poster-label{
+
+  margin-left: 10%;
+}
+
+.movie-add .large-poster-label{
+
+  margin-left: 10%;
+}
+
+.movie-add input[type=submit]{
+
+  margin-left: 45%;
+  background-color: black;
+  color: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: medium;
+}
+
+.edit-movie {
+
+  margin-left: 40%;
+}
+
+.movie-edit input[type=text]{
+
+  margin-left: 10%;
+}
+
+.movie-edit .title-label{
+
+  margin-left: 10%;
+}
+
+.movie-edit .synopsis-label{
+
+  margin-left: 10%;
+}
+
+.movie-edit .rating-label{
+
+  margin-left: 10%;
+}
+
+.movie-edit .purchasePrice-label{
+
+  margin-left: 10%;
+}
+
+.movie-edit .rentalPrice-label{
+
+  margin-left: 10%;
+}
+
+.movie-edit .large-poster-label{
+
+  margin-left: 6%;
+}
+
+.movie-edit input[type=submit]{
+
+  margin-left: 45%;
+  background-color: black;
+  color: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: medium;
+}
+
+/* TV SHOW CRUD*/
+.add-tv-show {
+
+  margin-left: 45%;
+}
+.tv-show-add input[type=text]{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .title-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .synopsis-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .category-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .rating-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .purchasePrice-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .rentalPrice-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .type-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .featured-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .small-poster-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add .large-poster-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-add input[type=submit]{
+
+  margin-left: 45%;
+  background-color: black;
+  color: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: medium;
+}
+
+.edit-tv-show {
+
+  margin-left: 40%;
+}
+
+.tv-show-edit input[type=text]{
+
+  margin-left: 10%;
+}
+
+.tv-show-edit .synopsis-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-edit .rating-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-edit .purchasePrice-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-edit .rentalPrice-label{
+
+  margin-left: 10%;
+}
+
+.tv-show-edit input[type=submit]{
+
+  margin-left: 45%;
+  background-color: black;
+  color: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: medium;
 }
 
 /* TV SHOW LISTING */
@@ -518,26 +801,38 @@ html, body {
 }
 
 /*tv show description*/
-
 .tvShow-details-container {
 
-  width: 70%;
+  width: 100%;
   display: flex;
   align-items: center;
 }
 
 .tvShow-details {
-  margin: 0;  
-  padding-left: 30px; 
+  margin: 0; 
+  padding-left: 20px;
+  width: 30%;
+}
+
+.rating {
+  margin: 0; 
+  padding-right: 30px;
+  margin-right: 5px;
 }
 
 .detail-tvShow-img {
   display: block;
+  float: left;
+  margin-right: 5px;
+  display: flex;
+  margin-bottom: 1rem;
 }
 
 .detail-tvShow-img-large {
-
-  margin-left: 30px;
+  margin-left: 10px;
+  width: 40%;
+  display: flex;
+  margin-bottom: 1rem;
 }
 
 .tvShow-button {
@@ -566,17 +861,35 @@ background-color: #008CBA;
     background-color: white;
     align-content: center;
     margin: 0 auto;
-    padding-left: 25px;
+    padding-left: 100px;
+    margin-bottom: 1rem;
+    width: 40%;
+
   }
 
-  input[type=text], input[type=password] {
-    width: 670px;
+  input[type=text] {
+    width: 78%;
     padding: 15px;
     margin: 10px 0 0 0;
     margin-top: 20px;
     background: #f1f1f1;
     display: flex;
+    align-content: center;
+    margin-bottom: 1rem;
+
    
+  }
+
+  input[type=password] {
+    width: 78%;
+    padding: 15px;
+    margin: 10px 0 0 0;
+    margin-top: 20px;
+    background: #f1f1f1;
+    display: flex;
+    align-content: center;
+    margin-bottom: 1rem;
+
   }
   
   input[type=text]:focus, input[type=password]:focus {
@@ -586,21 +899,23 @@ background-color: #008CBA;
 
   input[type=text1] {
     padding: 15px;
-    width: 670px;
+    width: 78%;
     margin: 10px 0 0 0;
     margin-top: 20px;
     display: flex;
     background: #f1f1f1;
+    margin-bottom: 1rem;
 
   }
 
   input[type=text2] {
     padding: 15px;
-    width: 670px;
+    width: 78%;
     margin: 10px 0 0 0;
     margin-top: 20px;
     display: flex;
     background: #f1f1f1;
+    margin-bottom: 1rem;
 
   }
 
@@ -608,6 +923,7 @@ background-color: #008CBA;
     color: red;
     padding-left: 5px;
     font-weight: bold;
+    margin-bottom: 1rem;
 
   }
 
@@ -615,13 +931,15 @@ background-color: #008CBA;
     color: red;
     padding-left: 5px;
     font-weight: bold;
-   
+    margin-bottom: 1rem;
+
   }
 
   .email-register-error {
     color: red;
     padding-left: 5px;
     font-weight: bold;
+    margin-bottom: 1rem;
 
   }
 
@@ -629,6 +947,7 @@ background-color: #008CBA;
     color: red;
     padding-left: 5px;
     font-weight: bold;
+    margin-bottom: 1rem;
 
   }
 
@@ -640,63 +959,28 @@ background-color: #008CBA;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 500px;
+    width: 86%;
     opacity: 0.9;
     align-content: center;
     padding-left: 20px;
-  }
+    margin-bottom: 1rem;
 
-  .cancel-button {
-    background-color:white;
-    color: black;
-    padding: 16px 20px;
-    margin: 8px 0;
-    cursor: pointer;
-    width: 500px;
-    opacity: 0.9;
-    align-content: center;
-    padding-left: 20px;
-    border-color: black;
-  }
-
-  .walmart-button {
-    background-color:blue;
-    color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 500px;
-    opacity: 0.9;
-    align-content: center;
-  }
-
-  .facebook-button {
-    background-color: darkblue;
-    color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 500px;
-    opacity: 0.9;
-    align-content: center;
   }
 
   /*Sign In*/
 
   .login_container {
+    padding: 40px;
     background-color: white;
     align-content: center;
+    margin: 0 auto;
     padding-left: 100px;
-    padding-top: 50px;
-    padding-bottom: 30px;
-    display: flexbox;
-
+    margin-bottom: 1rem;
+    width: 40%;
   }
 
-  input[type=email-text], input[type=password-text] {
-    width: 480px;
+  input[type=email-text], input[type=password] {
+    width: 80%;
     padding: 10px;
     margin: 10px 0 0 0;
     margin-top: 20px;
@@ -705,7 +989,7 @@ background-color: #008CBA;
     
    
   }
-  
+
   input[type=email-text]:focus, input[type=password-text]:focus {
     background-color: #ddd;
     outline: none;
@@ -733,48 +1017,13 @@ background-color: #008CBA;
     padding: 16px 20px;
     margin: 8px 0;
     border: none;
-    width: 500px;
+    width: 85%;
     opacity: 0.9;
     align-content: center;
     padding-left: 20px;
   }
 
-  
-  .new-account-button {
-    background-color:white;
-    color: black;
-    padding: 16px 20px;
-    margin: 8px 0;
-    width: 500px;
-    opacity: 0.9;
-    align-content: center;
-    padding-left: 20px;
-    border-color: black;
-  }
 
-  .walmart2-button {
-    background-color:blue;
-    color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 500px;
-    opacity: 0.9;
-    align-content: center;
-  }
-
-  .facebook2-button {
-    background-color: darkblue;
-    color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 500px;
-    opacity: 0.9;
-    align-content: center;
-  }
 
   /* DASHBOARD PAGE */
   .dashboard {
@@ -784,4 +1033,26 @@ background-color: #008CBA;
     align-content: center;
     margin: 0 auto;
     padding-left: 100px;
+  }
+
+  .dashboard .cart {
+    background-color: black;
+    color: white;
+    padding: 10px;
+  }
+
+  .admin-moviePage {
+    height: 500px;
+    padding: 50px;
+    background-color: white;
+    align-content: center;
+    margin: 0 auto;
+    padding-left: 100px;
+  }
+
+  .admin-moviePage .movie-tv-shows {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    padding-left: 18%;
   }
