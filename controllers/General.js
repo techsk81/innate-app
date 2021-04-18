@@ -6,52 +6,34 @@ const movieModel = require("../models/Movie");
 router.get("/", (req,res) => {
 
     movieModel.find({ featured: true})
-    .then((movies) => {
+    .then((moviesandTVShows) => {
 
-        const filteredMovie = movies.map(movie => {
+        const filteredMovieAndTVShows = moviesandTVShows.map(media => {
 
             return {
 
-                id: movie._id,            
-                title: movie.title,
-                synopsis: movie.synopsis,
-                category: movie.category,
-                rating: movie.rating,
-                smallPoster: movie.smallPoster,
-                largePoster: movie.largePoster,
-                rentalPrice: movie.rentalPrice,
-                purchasePrice: movie.purchasePrice,
-                type: movie.type,
-                featured: movie.featured
+                id: media._id,            
+                title: media.title,
+                synopsis: media.synopsis,
+                category: media.category,
+                rating: media.rating,
+                smallPoster: media.smallPoster,
+                largePoster: media.largePoster,
+                rentalPrice: media.rentalPrice,
+                purchasePrice: media.purchasePrice,
+                type: media.type,
+                featured: media.featured
 
             }
            
         })
 
         res.render("General/index", {
-            featuredMovies : filteredMovie
+            featuredMoviesandTVShows: filteredMovieAndTVShows
         })
     })
     .catch(err=>console.log(`Error :${err}`))
 
-    /*tvShowModel.find({ featured: true})
-    .then((tvShows) => {
-
-        const filteredTVShow = tvShows.map(tvShow => {
-
-            return {
-
-               
-
-            }
-           
-        })
-
-        res.render("General/index", {
-            featuredMovies : filteredTVShow
-        })
-    })
-    .catch(err=>console.log(`Error :${err}`));*/
 });
 
 
