@@ -140,6 +140,38 @@ router.get("/tv-shows-list-user", (req,res) => {
 
 });
 
+//tv shows page
+router.get("/tv-shows-list", (req,res) => {
+
+    tvShowsModel.find({type: false})
+    .then((tvShows) => {
+
+        const tvShowList = tvShows.map(tvshows => {
+
+            return {
+
+                id: tvshows._id,            
+                title: tvshows.title,
+                synopsis: tvshows.synopsis,
+                category: tvshows.category,
+                rating: tvshows.rating,
+                smallPoster: tvshows.smallPoster,
+                largePoster: tvshows.largePoster,
+                rentalPrice: tvshows.rentalPrice,
+                purchasePrice: tvshows.purchasePrice,
+                type: tvshows.type,
+                featured: tvshows.featured
+
+            }
+           
+        })
+
+        res.render("TVShows/tvShowListing", {
+            tvShows: tvShowList
+        })
+    })
+    .catch(err=>console.log(`Error :${err}`))
+})
 
 //description
 router.get("/tv-shows/:id", (req,res) => {
@@ -176,7 +208,7 @@ router.get("/add", isAuthenticated, (req,res) => {
 
     }  else
     {
-        res.redirect("tv-shows-list-admin");
+        res.redirect("media-list-admin");
     }
 });
 
@@ -205,7 +237,7 @@ router.post("/add", isAuthenticated, (req,res) => {
         req.files.smallPoster.mimetype == "image/gif" || path.parse(req.files.smallPoster.name).ext == "image/jpg" ||
         req.files.largePoster.mimetype == "image/jpeg" || req.files.largePoster.mimetype == "image/png" ||
         req.files.largePoster.mimetype == "image/gif" || path.parse(req.files.largePoster.name).ext == "image/jpg") {
-        //small poster
+
         req.files.smallPoster.name = `small_poster_${tvshow._id}${path.parse(req.files.smallPoster.name).ext}`
         req.files.smallPoster.mv(`public/uploads/${req.files.smallPoster.name}`)
 
@@ -219,7 +251,7 @@ router.post("/add", isAuthenticated, (req,res) => {
                 largePoster: req.files.largePoster.name
             })
             .then(() => {
-                res.redirect(`/Movies/movies-list-admin`);
+                res.redirect(`/Media/media-list-admin`);
             })
             .catch(err=>console.log(`Error while inserting into the data ${err}`));
 
@@ -271,8 +303,7 @@ router.put("/update/:id", (req,res) => {
     tvShowsModel.updateOne({_id: req.params.id}, tvshow)
     .then(() => {
 
-    
-        res.redirect("/Movies/movies-list-admin");
+        res.redirect("/Media/media-list-admin");
 
     })
     .catch(err=>console.log(`Error occurred when updating data from the database : ${err}`));    
@@ -284,7 +315,7 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
 
     movieModel.deleteOne({_id: req.params.id})
     .then(() => {
-        res.redirect("/Movies/movies-list-admin");
+        res.redirect("/Media/media-list-admin");
 
     })
     .catch(err=>console.log(`Error occurred when deleting data from the database : ${err}`));    
@@ -293,10 +324,10 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
 
 router.post("/search", (req,res) => {
 
-    tvShowsModel.find({ title: new RegExp(req.body.searchTVShows, 'i') })
+    tvShowsModel.find({ title: new RegExp(req.body.searchMovies, 'i') })
     .then((tvshows) => {
 
-        const filteredMovies = tvshows.map(tvshow => {
+        const filteredList = tvshows.map(tvshow => {
 
             return {
 
@@ -315,8 +346,15 @@ router.post("/search", (req,res) => {
             }
         });
 
-        res.render("Movies/movieListing", {
-            data: filteredMovies
+        const searchItems = [];
+
+        for(i = 0; i < item.filteredList; i++) {
+            searchItems.push(item[i].title);
+        }
+
+        res.render("Media/movieListing", {
+            data: filteredList,
+            searchItems
         })
     })
     .catch((err) => {console.log(`Error happened when pulling from the database: ${err}`);})
@@ -324,7 +362,7 @@ router.post("/search", (req,res) => {
 
 router.post("/add-to-cart", isAuthenticated, (req,res) => {
 
-    const {_id, title, quantity, purchasePrice, rentalPrice} = req.body;
+    const {_id, title, quantity, purchasePrice, rentalPrice, smallPoster} = req.body;
 
     let userId = req.session.userInfo._id;
 
@@ -342,14 +380,12 @@ router.post("/add-to-cart", isAuthenticated, (req,res) => {
                 cart.moviesAndTVShows[index] = item;
             } else {
 
-                cart.moviesAndTVShows.push({ _id, title, quantity, purchasePrice, rentalPrice});
+                cart.moviesAndTVShows.push({ _id, title, quantity, purchasePrice, rentalPrice, smallPoster});
             }
-
-            //const totalPrice = moviesAndTVShows[index].price * moviesAndTVShows[index].quantity;
 
             cartModel.updateOne({userId: req.session.userInfo._id}, {
 
-                moviesAndTVShows: [{ _id, title, quantity, purchasePrice, rentalPrice}]
+                moviesAndTVShows: [{ _id, title, quantity, purchasePrice, rentalPrice, smallPoster}]
 
             })
             .then(() => {
@@ -363,15 +399,15 @@ router.post("/add-to-cart", isAuthenticated, (req,res) => {
 
         } else {
 
-        const newCart = {
+        const mediaCart = {
 
             userId,
-            moviesAndTVShows: [{ _id, title, quantity, purchasePrice, rentalPrice}]
+            moviesAndTVShows: [{ _id, title, quantity, purchasePrice, rentalPrice, smallPoster}]
         }; 
 
-        const cart2 = new cartModel(newCart);
-        const purchaseOrderTotal = newCart.moviesAndTVShows[0].purchasePrice * newCart.moviesAndTVShows[0].quantity;
-        const rentalOrderTotal = newCart.moviesAndTVShows[0].rentalPrice * newCart.moviesAndTVShows[0].quantity;
+        const cart2 = new cartModel(mediaCart);
+        const purchaseOrderTotal = mediaCart.moviesAndTVShows[0].purchasePrice * mediaCart.moviesAndTVShows[0].quantity;
+        const rentalOrderTotal = mediaCart.moviesAndTVShows[0].rentalPrice * mediaCart.moviesAndTVShows[0].quantity;
 
         cart2.save()
         .then(() => {
@@ -379,12 +415,11 @@ router.post("/add-to-cart", isAuthenticated, (req,res) => {
             res.render("User/cart", {
 
                 userId,
-                moviesAndTVShows: [{ _id, title, quantity, purchasePrice, rentalPrice}],
+                moviesAndTVShows: [{ _id, title, quantity, purchasePrice, rentalPrice, smallPoster}],
                 purchaseOrderTotal,
                 rentalOrderTotal
             })
            
-
         })
         .catch(err=>console.log(`Error occurred when updating cart: ${err}`)); 
 

@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 const movieModel = require("../models/Movie");
+const cartModel = require("../models/Cart");
+
 const path = require("path");
 
 const isAuthenticated = require("../middleware/auth");
 
 
-router.get("/movies-list-admin", (req,res) => {
+router.get("/media-list-admin", isAuthenticated, (req,res) => {
 
     movieModel.find()
     .then((movies) => {
@@ -32,7 +34,7 @@ router.get("/movies-list-admin", (req,res) => {
            
         })
 
-        res.render("Movies/movieListingAdmin", {
+        res.render("Media/movieListingAdmin", {
             movies : filteredMovieList
         })
     })
@@ -40,7 +42,7 @@ router.get("/movies-list-admin", (req,res) => {
 
 });
 
-router.post("/movies-list-admin", (req,res) => {
+router.post("/media-list-admin", (req,res) => {
 
     if(req.body.smallPoster == "all") {
 
@@ -67,7 +69,7 @@ router.post("/movies-list-admin", (req,res) => {
                
             })
     
-            res.render("Movies/movieListingAdmin", {
+            res.render("Media/movieListingAdmin", {
                 movies : filteredMovieList
             })
         })
@@ -96,7 +98,7 @@ router.post("/movies-list-admin", (req,res) => {
                
             })
     
-            res.render("Movies/movieListingAdmin", {
+            res.render("Media/movieListingAdmin", {
                 movies : filteredMovieList
             })
         })
@@ -104,8 +106,7 @@ router.post("/movies-list-admin", (req,res) => {
     }
 });
 
-//admin
-router.get("/movies-list-user", (req,res) => {
+router.get("/media-list-user", (req,res) => {
 
     movieModel.find()
     .then((movies) => {
@@ -130,24 +131,56 @@ router.get("/movies-list-user", (req,res) => {
            
         })
 
-        res.render("Movies/movieListing", {
-            movies : filteredMovieList
+        res.render("Media/movieListing", {
+            movies: filteredMovieList
         })
     })
     .catch(err=>console.log(`Error :${err}`))
 
 });
 
+//movies page
+router.get("/movies-list", (req,res) => {
+
+    movieModel.find({type: true})
+    .then((movies) => {
+
+        const movieList = movies.map(movie => {
+
+            return {
+
+                id: movie._id,            
+                title: movie.title,
+                synopsis: movie.synopsis,
+                category: movie.category,
+                rating: movie.rating,
+                smallPoster: movie.smallPoster,
+                largePoster: movie.largePoster,
+                rentalPrice: movie.rentalPrice,
+                purchasePrice: movie.purchasePrice,
+                type: movie.type,
+                featured: movie.featured
+
+            }
+           
+        })
+
+        res.render("Media/movieListing", {
+            movies: movieList
+        })
+    })
+    .catch(err=>console.log(`Error :${err}`))
+})
 
 //description
-router.get("/movies-list/:id", (req,res) => {
+router.get("/media-list/:id", (req,res) => {
 
     movieModel.findById(req.params.id)
     .then((movie) => {
 
         const {_id, title, synopsis, category, rating, smallPoster, largePoster, rentalPrice, purchasePrice, type, featured} = movie;
 
-        res.render("Movies/movieDescription", {
+        res.render("Media/movieDescription", {
 
             _id, 
             title, 
@@ -170,11 +203,11 @@ router.get("/movies-list/:id", (req,res) => {
 router.get("/add", isAuthenticated, (req,res) => {
 
     if (req.session.userInfo.type == "Admin") {
-        res.render("Movies/movieAddForm");
+        res.render("Media/movieAddForm");
 
     }  else
     {
-        res.redirect("movies-list-admin");
+        res.redirect("media-list-admin");
     }
 });
 
@@ -217,7 +250,7 @@ router.post("/add", isAuthenticated, (req,res) => {
                 largePoster: req.files.largePoster.name
             })
             .then(() => {
-                res.redirect(`/Movies/movies-list-admin`);
+                res.redirect(`/Media/media-list-admin`);
             })
             .catch(err=>console.log(`Error while inserting into the data ${err}`));
 
@@ -241,7 +274,7 @@ router.get("/edit/:id", (req, res) => {
 
         const {_id,synopsis, rating, purchasePrice, rentalPrice, largePoster} = movie;
 
-        res.render("Movies/movieEditForm", {
+        res.render("Media/movieEditForm", {
 
             _id,
             synopsis,
@@ -269,8 +302,7 @@ router.put("/update/:id", (req,res) => {
     movieModel.updateOne({_id: req.params.id}, movie)
     .then(() => {
 
-    
-        res.redirect("/Movies/movies-list-admin");
+        res.redirect("/Media/media-list-admin");
 
     })
     .catch(err=>console.log(`Error occurred when updating data from the database : ${err}`));    
@@ -282,7 +314,7 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
 
     movieModel.deleteOne({_id: req.params.id})
     .then(() => {
-        res.redirect("/Movies/movies-list-admin");
+        res.redirect("/Media/media-list-admin");
 
     })
     .catch(err=>console.log(`Error occurred when deleting data from the database : ${err}`));    
@@ -291,10 +323,10 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
 
 router.post("/search", (req,res) => {
 
-    movieModel.find({ title: new RegExp(req.body.searchMovies, 'i') }).lean()
+    movieModel.find({ title: new RegExp(req.body.searchMovies, 'i') })
     .then((movies) => {
 
-        const filteredMovies = movies.map(movie => {
+        const filteredList = movies.map(movie => {
 
             return {
 
@@ -313,11 +345,88 @@ router.post("/search", (req,res) => {
             }
         });
 
-        res.render("Movies/movieListing", {
-            data: filteredMovies
+        const searchItems = [];
+
+        for(i = 0; i < item.filteredList; i++) {
+            searchItems.push(item[i].title);
+        }
+
+        res.render("Media/movieListing", {
+            data: filteredList,
+            searchItems
         })
     })
     .catch((err) => {console.log(`Error happened when pulling from the database: ${err}`);})
-})
+});
 
+router.post("/add-to-cart", isAuthenticated, (req,res) => {
+
+    const {_id, title, quantity, purchasePrice, rentalPrice, smallPoster} = req.body;
+
+    let userId = req.session.userInfo._id;
+
+    cartModel.findById(userId)
+    .then( cart => {
+
+        if(cart) {
+
+            let index = cart.moviesAndTVShows.findIndex(m => m._id == _id);
+
+            if(index > -1) {
+
+                let item = cart.moviesAndTVShows[index];
+                item.quantity = quantity;
+                cart.moviesAndTVShows[index] = item;
+            } else {
+
+                cart.moviesAndTVShows.push({ _id, title, quantity, purchasePrice, rentalPrice, smallPoster});
+            }
+
+            cartModel.updateOne({userId: req.session.userInfo._id}, {
+
+                moviesAndTVShows: [{ _id, title, quantity, purchasePrice, rentalPrice, smallPoster}]
+
+            })
+            .then(() => {
+
+    
+                res.redirect("User/cart");
+        
+            })
+            .catch(err=>console.log(`Error occurred when updating cart: ${err}`)); 
+
+
+        } else {
+
+        const mediaCart = {
+
+            userId,
+            moviesAndTVShows: [{ _id, title, quantity, purchasePrice, rentalPrice, smallPoster}]
+        }; 
+
+        const cart2 = new cartModel(mediaCart);
+        const purchaseOrderTotal = mediaCart.moviesAndTVShows[0].purchasePrice * mediaCart.moviesAndTVShows[0].quantity;
+        const rentalOrderTotal = mediaCart.moviesAndTVShows[0].rentalPrice * mediaCart.moviesAndTVShows[0].quantity;
+
+        cart2.save()
+        .then(() => {
+
+            res.render("User/cart", {
+
+                userId,
+                moviesAndTVShows: [{ _id, title, quantity, purchasePrice, rentalPrice, smallPoster}],
+                purchaseOrderTotal,
+                rentalOrderTotal
+            })
+           
+
+        })
+        .catch(err=>console.log(`Error occurred when updating cart: ${err}`)); 
+
+        }
+    })
+    .catch(err=>console.log(`Error occurred when updating cart: ${err}`)); 
+
+
+})
 module.exports = router;

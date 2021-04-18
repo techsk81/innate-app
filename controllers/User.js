@@ -240,4 +240,102 @@ router.get("/logout",(req,res)=>{
     
 });
 
+router.get("/cart/:id", isAuthenticated, (req, res) => {
+
+    if(req.session.cart == undefined) {
+
+        const error = "Your cart is empty";
+        res.render("User/cart", {
+            error
+        });
+    } else {
+    cartModel.findOne({userId: req.params.id})
+    .then((cart)=>{
+        let purchaseOrderTotal = 0;
+        let rentalOrderTotal = 0;
+        
+        for(i = 0; i < cart.moviesAndTVShows; i++) {
+
+            purchaseOrderTotal += item[i].purchasePrice * item[i].quantity;
+            rentalOrderTotal += item.rentalPrice * item.quantity;
+        }
+        const {moviesAndTVShows} = cart;
+
+        const userId = req.session.userInfo._id;
+        res.render("User/cart",{
+            userId,
+            moviesAndTVShows,
+            purchaseOrderTotal,
+            rentalOrderTotal
+        });
+    })
+    .catch((err)=>{console.log(`Error happened when pulling cart from database: ${err}`);
+});
+
+    }
+});
+
+router.get("/confirm", (req,res) => {
+
+    res.render("User/confirmOrder");
+})
+
+router.get("/confirm/:id", (req,res) => {
+
+    cartModel.findOne({ userId: req.params.id})
+    .then((cart) => {
+
+        const {moviesAndTVShows} = cart;
+        const {firstName, email} = req.session.userInfo;
+        let mediaData = "";
+
+        moviesAndTVShows.forEach((media) => {
+            media.purchasePrice = media.purchasePrice * media.quantity;
+            media.rentalPrice = media.rentalPrice * media.quantity;
+            mediaData = `<div>
+                        <p>${media.title}</p>
+                        <p>Price: $${media.purchasePrice}</p>
+                        <p>Rent: $${media.rentalPrice}</p>
+                        <p>${media.smallPoster}</p>
+                        </div>`;
+        })
+
+        
+        const sgMail = require('@sendgrid/mail')
+        sgMail.setApiKey(process.env.SEND_GRID_KEY)
+
+            const msg = {
+            to: `${email}`, // Change to your recipient
+            from: 'shivani_06@hotmail.ca', // Change to your verified sender
+            subject: 'Order Confirmation!',
+            html: `<strong>Hey ${firstName}! This is your order:
+            ${mediaData}
+            <br>
+            <br>Enjoy,<br>
+            Innate Team` ,
+        };
+
+        sgMail.send(msg)
+        .then(()=>{
+            
+            cartModel.deleteMany({userId: req.params.id})
+            .then(() => {
+
+                res.redirect("/user/confirm");
+                console.log('Confirmation Email Sent!');
+
+            })
+            .catch(err=>console.log(`Error: ${err}`));
+
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+
+    })
+    .catch(err=>console.log(`Error: ${err}`));
+
+
+})
+
 module.exports = router;

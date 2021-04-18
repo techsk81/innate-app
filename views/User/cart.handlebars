@@ -1,0 +1,38 @@
+<div class="cart">
+
+    <div class="shopping-cart">
+        <h1>This is your cart for movies and tv shows</h1>
+        
+        <div class="cart-movie-tvshows">
+            <h3>{{cart.title}}</h3>          
+        </div>   
+
+          <div class="poster">
+            {{cart.smallPoster}}         
+        </div>   
+
+        <div class="pricing">
+            Price: {{cart.purchasePrice}}
+        </div> 
+
+        <div class="pricing">
+            Rent: {{cart.rentalPrice}}
+        </div> 
+
+        <div class="quantity">
+            Quantity: {{cart.quantity}}
+        </div> 
+    
+        <div class="purchase-total">
+            Purchase Cumulative Total: {{cart.purchaseOrderTotal}}
+        </div> 
+
+        <div class="purchase-total">
+            Rental Cumulative Total: {{cart.rentalOrderTotal}}
+        </div> 
+        <button class="confirm-button">
+            <a href="/user/confirm/{{user._id}}">Confirm Order</a>
+        </button>
+
+    </div>
+</div>
