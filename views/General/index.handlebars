@@ -18,38 +18,21 @@
 
 
 
-<h3>Featured Movies</h3>
+<h3>Featured Movies & TV Shows</h3>
 
 <div class="featured-movies">
   <div class="featured-movies-contain">
-    {{#each featuredMovies}}
+    {{#each featuredMoviesandTVShows}}
     <div class="featured-movies-box">
       {{#if this.featured}}
       <div class="featured-movies-img">
-          <a href="/movies/movies-list/{{this.id}}"><img src="/uploads/{{this.smallPoster}}" alt="{{this.title}}" width="320" height="450"></a>
+          <a href="/media/media-list/{{this.id}}"><img src="/uploads/{{this.smallPoster}}" alt="{{this.title}}" width="320" height="450"></a>
       </div>
       {{/if}}
     </div>
     {{/each}}
   </div>
 </div>
-
-<h3>Featured Shows</h3>
-
-<div class="featured-tv-shows">
-  <div class="featured-tv-shows-contain">
-    {{#each featuredTVShows}}
-    <div class="featured-tv-shows-box">
-      {{#if this.featured}}
-      <div class="featured-tv-shows-img">
-          <a href="/tvshows-list/{{this.id}}"><img src="{{this.smallPoster}}" alt="{{this.title}}" width="320" height="450"></a>
-      </div>
-      {{/if}}
-    </div>
-    {{/each}}
-  </div>
-</div>
-
 
 <h3>ACTORS SPOTLIGHT</h3>
 <div class="actors-content">

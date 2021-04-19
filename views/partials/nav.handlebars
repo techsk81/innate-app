@@ -1,16 +1,17 @@
 <nav>
 <div class="topnav">
-        <a class="navbar-brand">
+        <a class="navbar-brand" href="/">
         <div class="logo-image">
             <img src="/images/INNATE.jpg" class="img-fluid">
         </div></a>
         <a class="active" href="/">Home</a>
-        <a href="/media/media-list-user">Movies & TV Shows</a>
+        <a href="/media/movies-list">Movies</a>
+        <a href="/tvshows/tv-shows-list">TV Shows</a>
+
     <div class="topnav-right">
         {{#if user}}
             <a href="/user/logout">Logout</a>
         {{else}}
-        
             <a href="/user/login">Login</a>
             <a href="/user/register">Sign Up</a>
         {{/if}}    
