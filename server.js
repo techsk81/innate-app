@@ -9,7 +9,8 @@ require('dotenv').config({ path: 'config/keys.env'});
 
 const generalRoutes = require("./controllers/General");
 const userRoutes = require("./controllers/User");
-const movieRoutes = require("./controllers/Movie");
+const mediaRoutes = require("./controllers/Movie");
+const tvShowsRoutes = require("./controllers/TVShows");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,28 +19,6 @@ app.use(express.static("public"));
 
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
-
-// GET REQUESTS
-
-
-
-/*app.get("/tvshows-list", (req,res) => {
-
-    res.render("tvShowListing", {
-        title : "tvShowListing",
-        tvShows : database.getAllTVShows()
-    })
-})
-
-app.get("/tvshows-list/:id", (req,res) => {
-
-    res.render("tvShowDescription",{
-        tvShow : database.getATVShow(req.params.id)
-    })
-
-})*/
-
-// POST REQUESTS
 
 app.use((req,res,next) => {
 
@@ -67,13 +46,15 @@ app.use((req,res,next) => {
 
     res.locals.user = req.session.userInfo;
 
+    res.locals.cart = req.session.cart;
     next();
 });
 
-//MAPS EXPRESS TO ALL OUR  ROUTER OBJECTS
+//MAPS EXPRESS TO ALL OUR ROUTER OBJECTS
 app.use("/", generalRoutes);
 app.use("/user", userRoutes);
-app.use("/movies", movieRoutes);
+app.use("/media", mediaRoutes);
+app.use("/tvshows", tvShowsRoutes);
 
 mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
