@@ -37,7 +37,7 @@ router.get("/media-list-admin", isAuthenticated, (req,res) => {
             movies : filteredMovieList
         })
     })
-    .catch(err=>console.log(`Error :${err}`))
+    .catch(err=>console.log(`Error occured when pulling media list admin:${err}`))
 
 });
 
@@ -72,7 +72,7 @@ router.post("/media-list-admin", (req,res) => {
                 movies : filteredMovieList
             })
         })
-        .catch(err=>console.log(`Error :${err}`));
+        .catch(err=>console.log(`Error occured when pulling media list admin :${err}`));
     } else {
         movieModel.find({smallPoster: req.body.smallPoster})
         .then((movies) => {
@@ -101,42 +101,10 @@ router.post("/media-list-admin", (req,res) => {
                 movies : filteredMovieList
             })
         })
-        .catch(err=>console.log(`Error :${err}`))
+        .catch(err=>console.log(`Error occured when pulling media list admin :${err}`))
     }
 });
 
-router.get("/media-list-user", (req,res) => {
-
-    movieModel.find()
-    .then((movies) => {
-
-        const filteredMovieList = movies.map(movie => {
-
-            return {
-
-                id: movie._id,            
-                title: movie.title,
-                synopsis: movie.synopsis,
-                category: movie.category,
-                rating: movie.rating,
-                smallPoster: movie.smallPoster,
-                largePoster: movie.largePoster,
-                rentalPrice: movie.rentalPrice,
-                purchasePrice: movie.purchasePrice,
-                type: movie.type,
-                featured: movie.featured
-
-            }
-           
-        })
-
-        res.render("Media/movieListing", {
-            movies: filteredMovieList
-        })
-    })
-    .catch(err=>console.log(`Error :${err}`))
-
-});
 
 //movies page
 router.get("/movies-list", (req,res) => {
@@ -352,7 +320,7 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
 
 });
 
-router.get("/search", isAuthenticated, (req,res) => {
+/*router.get("/search", isAuthenticated, (req,res) => {
 
     movieModel.find()
     .then((movies) => {
@@ -422,7 +390,7 @@ router.post("/search", (req,res) => {
         })
     })
     .catch((err) => {console.log(`Error happened when pulling from the database: ${err}`);})
-});
+});*/
 
 router.post("/add-to-cart", isAuthenticated, (req,res) => {
 
