@@ -136,7 +136,7 @@ router.get("/movies-list", (req,res) => {
             movies: movieList
         })
     })
-    .catch(err=>console.log(`Error :${err}`))
+    .catch(err=>console.log(`Error occured when pulling movie list :${err}`))
 })
 
 //tv shows page
@@ -169,7 +169,7 @@ router.get("/tv-shows-list", (req,res) => {
             movies: tvShowList
         })
     })
-    .catch(err=>console.log(`Error :${err}`))
+    .catch(err=>console.log(`Error occured when pulling tv show list :${err}`))
 })
 
 //description
@@ -195,7 +195,7 @@ router.get("/media-list/:id", (req,res) => {
             featured
         })
     })
-    .catch(err=>console.log(`Error: ${err}`));
+    .catch(err=>console.log(`Error occured when pulling description: ${err}`));
 
 });
 

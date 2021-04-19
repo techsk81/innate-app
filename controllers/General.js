@@ -32,7 +32,7 @@ router.get("/", (req,res) => {
             featuredMoviesandTVShows: filteredMovieAndTVShows
         })
     })
-    .catch(err=>console.log(`Error :${err}`))
+    .catch(err=>console.log(`Error occured when pulling featured movies and tv shows:${err}`))
 
 });
 

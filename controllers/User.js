@@ -127,7 +127,7 @@ router.post("/register", (req,res) => {
                 
                 })
                 .catch((err) => {
-                    console.log(`Error while inserting into the data ${err}`);
+                    console.log(`Error while inserting into the database register: ${err}`);
 
                     const emailError = [];
 
@@ -222,12 +222,12 @@ router.post("/login", (req,res) => {
     
                     }
                 })
-                .catch(err=>console.log(`Error: ${err}`));
+                .catch(err=>console.log(`Error while inserting into the database login: ${err}`));
     
             }
     
         })
-        .catch(err=>console.log(`Error: ${err}`));
+        .catch(err=>console.log(`Error while inserting into the database register: ${err}`));
        
     }
 
