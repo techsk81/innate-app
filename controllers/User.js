@@ -291,7 +291,6 @@ router.get("/cart/:id", isAuthenticated, (req, res) => {
 });
 
 router.get("/confirm", isAuthenticated, (req,res) => {
-
     res.render("User/confirmOrder");
 })
 
