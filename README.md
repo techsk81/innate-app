@@ -14,7 +14,8 @@ This app includes the following modules and functionalities:
 
 ###### Administrator Module & Functionality
 - Administrator account is registered in the database (MongoDB Cloud Service)
-- Movie & TV Show Functionality - Administrator can do the following for movies and tv shows: 
+- Movie & TV Show Functionality 
+  - Only administrator can do the following for movies and tv shows: 
   - CREATE
   - ADD
   - EDIT
