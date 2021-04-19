@@ -345,7 +345,6 @@ router.get("/confirm/:id", isAuthenticated, (req,res) => {
     })
     .catch(err=>console.log(`Error: ${err}`));
 
-
 })
 
 module.exports = router;

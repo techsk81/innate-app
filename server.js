@@ -60,7 +60,6 @@ mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {useNewUrlParser: true,
 })
 .catch(err => console.log(`Error occured when connecting to database ${err}`));
 
-
 const PORT = process.env.PORT;
 app.listen(PORT, ()=>{
     console.log("Web Server is running...");

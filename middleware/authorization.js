@@ -1,4 +1,3 @@
-
 const dashboardLoader = (req,res,next) => {
 
     if(req.session.userInfo.type == "Admin") {

@@ -8,7 +8,6 @@ const path = require("path");
 
 const isAuthenticated = require("../middleware/auth");
 
-
 router.get("/media-list-admin", isAuthenticated, (req,res) => {
 
     movieModel.find()
