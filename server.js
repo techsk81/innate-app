@@ -10,6 +10,7 @@ require("dotenv").config({path:'./config/keys.env'});
 const generalRoutes = require("./controllers/General");
 const userRoutes = require("./controllers/User");
 const mediaRoutes = require("./controllers/Movie");
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
