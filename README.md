@@ -1,6 +1,7 @@
 # web322-assign3-5
 
 ## Movie and TV Show Rental Service App
+- Heroku app link: 
 
 This app includes the following modules and functionalities:
 ###### Customer (User) Registration Module 
