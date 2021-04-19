@@ -10,7 +10,6 @@ require('dotenv').config({ path: 'config/keys.env'});
 const generalRoutes = require("./controllers/General");
 const userRoutes = require("./controllers/User");
 const mediaRoutes = require("./controllers/Movie");
-const tvShowsRoutes = require("./controllers/TVShows");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -54,7 +53,6 @@ app.use((req,res,next) => {
 app.use("/", generalRoutes);
 app.use("/user", userRoutes);
 app.use("/media", mediaRoutes);
-app.use("/tvshows", tvShowsRoutes);
 
 mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {

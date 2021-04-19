@@ -172,6 +172,39 @@ router.get("/movies-list", (req,res) => {
     .catch(err=>console.log(`Error :${err}`))
 })
 
+//tv shows page
+router.get("/tv-shows-list", (req,res) => {
+
+    movieModel.find({type: false})
+    .then((tvShows) => {
+
+        const tvShowList = tvShows.map(tvshows => {
+
+            return {
+
+                id: tvshows._id,            
+                title: tvshows.title,
+                synopsis: tvshows.synopsis,
+                category: tvshows.category,
+                rating: tvshows.rating,
+                smallPoster: tvshows.smallPoster,
+                largePoster: tvshows.largePoster,
+                rentalPrice: tvshows.rentalPrice,
+                purchasePrice: tvshows.purchasePrice,
+                type: tvshows.type,
+                featured: tvshows.featured
+
+            }
+           
+        })
+
+        res.render("Media/movieListing", {
+            movies: tvShowList
+        })
+    })
+    .catch(err=>console.log(`Error :${err}`))
+})
+
 //description
 router.get("/media-list/:id", (req,res) => {
 

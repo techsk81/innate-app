@@ -235,11 +235,7 @@ router.post("/login", (req,res) => {
 });
 
 
-router.get("/userDashboard", isAuthenticated, dashboardLoader, (req, res) => {
-
-    res.render("User/userDashboard");
-
-});
+router.get("/userDashboard", isAuthenticated, dashboardLoader); 
 
 router.get("/adminDashboard", isAuthenticated, (req, res) => {
 
