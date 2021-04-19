@@ -15,10 +15,11 @@ This app includes the following modules and functionalities:
 ###### Administrator Module & Functionality
 - Administrator account is registered in the database (MongoDB Cloud Service)
 - Movie & TV Show Functionality - Administrator can: 
+  - CREATE
   - ADD
   - EDIT
-  - UPDATE
   - DELETE
+  Movies and TV Shows 
   
 ###### Searching For Movies/TV Shows Module
 - Visitors to the app search for movies and tv shows
@@ -26,11 +27,12 @@ This app includes the following modules and functionalities:
 ###### Movie & TV Show Cart Module & Functionality
 - Only logged in customers can add movies & tv shows to the cart
 
-## How to Become a Customer
+## Signing In
+### How to Become a Customer
 - Sign up to create a new account by clicking on "Sign Up" to get registered
 - Log in with the email and password by clicking on "Log In"
 
-## How to log in as an Admin
+### How to log in as an Admin
 - Log in by clicking on "Log In" 
 - Use the email: admin@innate.com and password: Innate2021 (First letter must be capital) 
 
