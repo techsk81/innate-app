@@ -1,22 +1,25 @@
- <h2>Update TV Show Information</h2>
-    <form method="POST" action="/movies/update/{{_id}}?method=PUT" enctype="multipart/form-data">
+ <h2 class="edit-tv-show">Update TV Show Information</h2>
+    <form class="tv-show-edit" method="POST" action="/tvshows/update/{{_id}}?method=PUT" enctype="multipart/form-data">
 
-        <label>Synopsis</label>
+        <label class="title-label">Title</label>
+        <input type="text" name="title" id="title"> <br><br>
+
+        <label class="synopsis-label">Synopsis</label>
         <input type="text" name="synopsis" id="synopsis" value="{{synopsis}}"> <br><br>
 
-        <label>Rating</label>
+        <label class="rating-label">Rating</label>
         <input type="text" name="rating" id="rating" value="{{rating}}"> <br><br>
 
-        <label>Purchase Price</label>
+        <label class="purchasePrice-label">Purchase Price</label>
         <input type="text" name="purchasePrice" value="{{purchasePrice}}"> <br><br>
 
-        <label>Rental Price</label>
+        <label class="rentalPrice-label">Rental Price</label>
         <input type="text" name="rentalPrice" value="{{rentalPrice}}"> <br><br>
 
         <img src="/uploads/{{largePoster}}" alt="{{largePoster}}" width="350" height="200">
 
         <label>Update Large Poster Upload</label>
-        <input type="file" name="largePoster" id="largePoster" value="{{largePoster}}"><br><br>
+        <input type="file" name="largePoster" id="largePoster"><br><br>
 
         <input type="submit" value="Update TV Show">
     </form>

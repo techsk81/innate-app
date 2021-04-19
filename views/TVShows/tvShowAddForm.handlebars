@@ -1,43 +1,43 @@
-    <h2>Add a TV Show</h2>
+    <h2 class="add-tv-show">Add a TV Show</h2>
     
-    <form method="POST" action="/movies/add" enctype="multipart/form-data">
+    <form class="tv-show-add" method="POST" action="/tvshows/add" enctype="multipart/form-data">
 
-        <label>Title</label>
+        <label class="title-label">Title</label>
         <input type="text" name="title" id="title"> <br><br>
 
-        <label>Synopsis</label>
-        <textarea id="synopsis" name="synopsis"></textarea><br><br>
+        <label class="synopsis-label">Synopsis</label>
+        <input type="text" name="synopsis" id="synopsis"> <br><br>
 
-        <label>Category</label>
+        <label class="category-label">Category</label>
         <input type="text" name="category" id="cat"> <br><br>
 
-        <label>TV Show Rating</label>
+        <label class="rating-label">Rating</label>
         <input type="text" name="rating" id="rating"> <br><br>
 
-        <label>Rental Price</label>
-        <input type="text" name="rentalPrice" id="rentalPrice"> <br><br>
-
-        <label>Purchase Price</label>
+        <label class="purchasePrice-label">Purchase Price</label>
         <input type="text" name="purchasePrice" id="purchasePrice"> <br><br>
 
-        <label>Movie or TV Show</label>
+        <label class="rentalPrice-label">Rental Price</label>
+        <input type="text" name="rentalPrice" id="rentalPrice"> <br><br>
+
+        <label class="type-label">Movie or TV Show</label>
         <select name="type">
-            <option value="movie">Movie</option>
-            <option value="tv-show">TV Show</option>
+            <option value="true">Movie</option>
+            <option value="false">TV Show</option>
         </select>
         <br><br>
 
-        <label>Featured?</label>
+        <label class="featured-label">Featured?</label>
         <select name="featured">
             <option value="true">Yes</option>
             <option value="false">No</option>
         </select>
         <br><br>
 
-        <label>Small Poster Upload</label>
+        <label class="small-poster-label">Small Poster Upload</label>
         <input type="file" name="smallPoster" id="smallPoster"> <br><br>
 
-         <label>Large Poster Upload</label>
+         <label class="large-poster-label">Large Poster Upload</label>
         <input type="file" name="largePoster" id="largePoster"> <br><br>
 
         <input type="submit" value="Add Tv Show">
