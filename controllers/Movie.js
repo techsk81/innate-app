@@ -320,7 +320,7 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
 
 });
 
-/*router.get("/search", isAuthenticated, (req,res) => {
+router.get("/search", isAuthenticated, (req,res) => {
 
     movieModel.find()
     .then((movies) => {
@@ -390,7 +390,7 @@ router.post("/search", (req,res) => {
         })
     })
     .catch((err) => {console.log(`Error happened when pulling from the database: ${err}`);})
-});*/
+});
 
 router.post("/add-to-cart", isAuthenticated, (req,res) => {
 
