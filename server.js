@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const session = require('express-session');
 
-require('dotenv').config({ path: 'config/keys.env'});
+require("dotenv").config({path:'./config/keys.env'});
 
 const generalRoutes = require("./controllers/General");
 const userRoutes = require("./controllers/User");
