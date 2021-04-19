@@ -33,6 +33,13 @@
         {{/each}}
         </span>
 
+        <input type="password" placeholder="Confirm Password" name="cpassword" value={{passwordC}}>
+        <span class="password-register-error">        
+         {{#each passwordCErrorMessage}}
+            {{this}}    
+        {{/each}}
+        </span>
+
         <p>I certify that I am at least 18 years old and that I agree to the 
             <a href="#">Terms and Polices</a> and <a href="#">Privacy Policy</a>.
         </p>
