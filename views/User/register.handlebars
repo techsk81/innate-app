@@ -1,0 +1,53 @@
+<section id="register-section">
+<form method="POST" action="/user/register">
+
+    <div class="register_container">
+
+        <h1>Create a New Account</h1>
+
+        <input type="text1" placeholder="First name" name="firstName" value={{fNameV}}>
+        <span class="first-name-error">
+         {{#each fNameErrorMessage}}
+            {{this}}    
+        {{/each}}
+        </span>
+
+        <input type="text2" placeholder="Last name" name="lastName" value={{lNameV}}>
+        <span class="last-name-error">
+         {{#each lNameErrorMessage}}
+            {{this}}    
+        {{/each}}
+        </span>
+
+        <input type="text" placeholder="Email" name="email" value={{emailV}}>
+        <span class="email-register-error">        
+         {{#each emailRErrorMessage}}
+            {{this}}    
+        {{/each}}
+        </span>
+
+        <input type="password" placeholder="Password" name="password" value={{passwordV}}>
+        <span class="password-register-error">        
+         {{#each passwordRErrorMessage}}
+            {{this}}    
+        {{/each}}
+        </span>
+
+        <input type="password" placeholder="Confirm Password" name="cpassword" value={{passwordC}}>
+        <span class="password-register-error">        
+         {{#each passwordCErrorMessage}}
+            {{this}}    
+        {{/each}}
+        </span>
+
+        <p>I certify that I am at least 18 years old and that I agree to the 
+            <a href="#">Terms and Polices</a> and <a href="#">Privacy Policy</a>.
+        </p>
+
+        <button type="submit" class="sign-up-button">Sign Up</button>
+
+
+    </div>
+
+</form>
+</section>

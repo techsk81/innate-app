@@ -1,0 +1,95 @@
+<div class="slider">
+       <span id="slide1"></span>
+       <span id="slide2"></span>
+       <span id="slide3"></span>
+
+       <div class="slides">
+           <img src="images/banners/1.jpg" class="slide" width="1200" height="500">
+           <img src="images/banners/2.jpg" class="slide" width="1200" height="500">
+           <img src="images/banners/3.png" class="slide" width="1200" height="500">
+       </div>
+
+       <div class="slider-btns">
+           <a href="#slide1"></a>
+           <a href="#slide2"></a>
+           <a href="#slide3"></a>
+       </div>
+   </div>
+
+
+
+<h3>Featured Movies & TV Shows</h3>
+
+<div class="featured-movies">
+  <div class="featured-movies-contain">
+    {{#each featuredMoviesandTVShows}}
+    <div class="featured-movies-box">
+      {{#if this.featured}}
+      <div class="featured-movies-img">
+          <a href="/media/media-list/{{this.id}}"><img src="/uploads/{{this.smallPoster}}" alt="{{this.title}}" width="320" height="450"></a>
+      </div>
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+<h3>ACTORS SPOTLIGHT</h3>
+<div class="actors-content">
+  <div class="actors-box">
+  <ul>
+     <li>
+      <figure class="actor-photo">
+        <img src="images/contents/actors/cover-page.jpg" alt="cover" width="100" height="200">
+      </figure>
+    </li>
+    <li>
+      <figure class="actor-photo">
+        <img src="images/contents/actors/1.jpg" alt="actor1" width="100" height="200">
+      </figure>
+    </li>
+
+    <li>
+      <figure class="actor-photo">
+        <img src="images/contents/actors/2.jpg" alt="actor2" width="100" height="200">
+      </figure>
+    </li>
+
+    <li>
+      <figure class="actor-photo">
+        <img src="images/contents/actors/3.jpg" alt="actor3" width="100" height="250">
+      </figure>
+    </li>
+  </ul>
+  </div>
+</div>
+
+<h3> 
+
+</h3>
+<div class="movie-shows-content">
+  <div class="movie-shows-box">
+  <ul>
+     <li>
+      <figure class="movie-shows-photo">
+        <img src="images/contents/movie-shows/cover.jpg" alt="" width="200" height="100">
+      </figure>
+    </li>
+    <li>
+      <figure class="movie-shows-photo">
+        <img src="images/contents/movie-shows/greys-anatomy.jpg" alt="" width="200" height="100">
+      </figure>
+    </li>
+    <li>
+      <figure class="movie-shows-photo">
+        <img src="images/contents/movie-shows/modern-family.jpg" alt="" width="200" height="100">
+      </figure>
+    </li>
+    <li>
+      <figure class="movie-shows-photo">
+        <img src="images/contents/movie-shows/iron-man.jpg" alt="" width="200" height="100">
+      </figure>
+    </li>
+  </ul>
+  </div>
+</div>

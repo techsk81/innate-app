@@ -1,0 +1,26 @@
+ <h2 class="edit-movie">Update Media Information</h2>
+    <form class="movie-edit" method="POST" action="/media/update/{{_id}}?method=PUT" enctype="multipart/form-data">
+
+        <label class="title-label">Title</label>
+        <input type="text" name="title" id="title"> <br><br>
+
+        <label class="synopsis-label">Synopsis</label>
+        <input type="text" name="synopsis" id="synopsis" value="{{synopsis}}"> <br><br>
+
+        <label class="rating-label">Rating</label>
+        <input type="text" name="rating" id="rating" value="{{rating}}"> <br><br>
+
+        <label class="purchasePrice-label">Purchase Price</label>
+        <input type="text" name="purchasePrice" value="{{purchasePrice}}"> <br><br>
+
+        <label class="rentalPrice-label">Rental Price</label>
+        <input type="text" name="rentalPrice" value="{{rentalPrice}}"> <br><br>
+
+        <img src="/uploads/{{largePoster}}" alt="{{largePoster}}" width="350" height="200">
+
+        <label class="large-poster-label">Update Large Poster Upload</label>
+        <input type="file" name="largePoster" id="largePoster"><br><br>
+
+        <input type="submit" value="Update Movie">
+    </form>
+

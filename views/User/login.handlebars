@@ -1,0 +1,33 @@
+<section id="login-section">      
+    <form action="/user/login" method="POST">
+
+    <div class="login_container">
+
+        <h1>Log In to Innate</h1>
+
+         {{#each errorLogin}}
+            {{this}}
+        {{/each}}    
+
+        <input type="email-text" placeholder="Email" name="email" value={{emailV}}>
+        <span class="password-error">
+        {{#each emailErrorMessage}}
+            {{this}}    
+        {{/each}}
+
+        </span>
+        <input type="password" placeholder="Password" name="password" value={{passwordV}}>
+        <span class="password-error">
+          {{#each passwordErrorMessage}}
+            {{this}}    
+        {{/each}}
+
+        </span>
+        <p><a href="#">Forgot your Innate password?</a></p>
+
+        <input type="submit" class="sign-in-button" value="Log In">
+
+    </div>
+
+</form>
+</section>
