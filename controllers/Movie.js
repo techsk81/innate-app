@@ -266,7 +266,6 @@ router.post("/add", isAuthenticated, (req,res) => {
 
 })
 
-//synopsis, price, small banner and large banner
 router.get("/edit/:id", (req, res) => {
 
     movieModel.findById(req.params.id)
@@ -321,6 +320,39 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
 
 });
 
+router.get("/search", isAuthenticated, (req,res) => {
+
+    movieModel.find()
+    .then((movies) => {
+
+        const filteredMovieList = movies.map(movie => {
+
+            return {
+
+                id: movie._id,            
+                title: movie.title,
+                synopsis: movie.synopsis,
+                category: movie.category,
+                rating: movie.rating,
+                smallPoster: movie.smallPoster,
+                largePoster: movie.largePoster,
+                rentalPrice: movie.rentalPrice,
+                purchasePrice: movie.purchasePrice,
+                type: movie.type,
+                featured: movie.featured
+
+            }
+           
+        })
+
+        res.render("Media/movieListingAdmin", {
+            movies : filteredMovieList
+        })
+    })
+    .catch(err=>console.log(`Error :${err}`))
+
+});
+
 router.post("/search", (req,res) => {
 
     movieModel.find({ title: new RegExp(req.body.searchMovies, 'i') })
@@ -347,11 +379,12 @@ router.post("/search", (req,res) => {
 
         const searchItems = [];
 
-        for(i = 0; i < item.filteredList; i++) {
-            searchItems.push(item[i].title);
-        }
+        filteredList.forEach((item) => {
+            searchItems.push(item._id);
 
-        res.render("Media/movieListing", {
+        })
+
+        res.render("Media/movieDescription", {
             data: filteredList,
             searchItems
         })
@@ -362,8 +395,7 @@ router.post("/search", (req,res) => {
 router.post("/add-to-cart", isAuthenticated, (req,res) => {
 
     const {_id, title, quantity, purchasePrice, rentalPrice, smallPoster} = req.body;
-
-    let userId = req.session.userInfo._id;
+    const userId = req.session.userInfo._id;
 
     cartModel.findById(userId)
     .then( cart => {
@@ -372,11 +404,12 @@ router.post("/add-to-cart", isAuthenticated, (req,res) => {
 
             let index = cart.moviesAndTVShows.findIndex(m => m._id == _id);
 
-            if(index > -1) {
+            if(index > 1) {
 
                 let item = cart.moviesAndTVShows[index];
-                item.quantity = quantity;
+                item.quantity = req.body.quantity;
                 cart.moviesAndTVShows[index] = item;
+
             } else {
 
                 cart.moviesAndTVShows.push({ _id, title, quantity, purchasePrice, rentalPrice, smallPoster});
@@ -389,7 +422,6 @@ router.post("/add-to-cart", isAuthenticated, (req,res) => {
             })
             .then(() => {
 
-    
                 res.redirect("User/cart");
         
             })
@@ -421,11 +453,11 @@ router.post("/add-to-cart", isAuthenticated, (req,res) => {
            
 
         })
-        .catch(err=>console.log(`Error occurred when updating cart: ${err}`)); 
+        .catch(err=>console.log(`Error occurred when updating the cart: ${err}`)); 
 
         }
     })
-    .catch(err=>console.log(`Error occurred when updating cart: ${err}`)); 
+    .catch(err=>console.log(`Error occurred when updating the cart: ${err}`)); 
 
 
 })

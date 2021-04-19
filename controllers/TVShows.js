@@ -322,6 +322,38 @@ router.delete("/delete/:id", isAuthenticated, (req,res) => {
 
 });
 
+router.get("/search", (req,res) => {
+
+    tvShowsModel.find()
+    .then((tvShows) => {
+
+        const tvShowList = tvShows.map(tvshows => {
+
+            return {
+
+                id: tvshows._id,            
+                title: tvshows.title,
+                synopsis: tvshows.synopsis,
+                category: tvshows.category,
+                rating: tvshows.rating,
+                smallPoster: tvshows.smallPoster,
+                largePoster: tvshows.largePoster,
+                rentalPrice: tvshows.rentalPrice,
+                purchasePrice: tvshows.purchasePrice,
+                type: tvshows.type,
+                featured: tvshows.featured
+
+            }
+           
+        })
+
+        res.render("Media/movieListing", {
+            tvShows: tvShowList
+        })
+    })
+    .catch(err=>console.log(`Error :${err}`))
+})
+
 router.post("/search", (req,res) => {
 
     tvShowsModel.find({ title: new RegExp(req.body.searchMovies, 'i') })
@@ -348,11 +380,12 @@ router.post("/search", (req,res) => {
 
         const searchItems = [];
 
-        for(i = 0; i < item.filteredList; i++) {
-            searchItems.push(item[i].title);
-        }
+        filteredList.forEach((item) => {
+            searchItems.push(item._id);
 
-        res.render("Media/movieListing", {
+        })
+
+        res.render("Media/tvShowDescription", {
             data: filteredList,
             searchItems
         })
@@ -363,8 +396,7 @@ router.post("/search", (req,res) => {
 router.post("/add-to-cart", isAuthenticated, (req,res) => {
 
     const {_id, title, quantity, purchasePrice, rentalPrice, smallPoster} = req.body;
-
-    let userId = req.session.userInfo._id;
+    const userId = req.session.userInfo._id;
 
     cartModel.findById(userId)
     .then( cart => {
