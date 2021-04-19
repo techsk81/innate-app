@@ -20,12 +20,13 @@ router.post("/register", (req,res) => {
             const lNameError = [];
             const emailRError = [];
             const passwordRError = [];
+            const passwordCError = [];
         
             const nameRegex = /^.{5,30}$/;
         
             const passwordRegex = /(?:[A-Z].*[0-9])|(?:[0-9].*[A-Z])/;
         
-            const {firstName, lastName, email, password} = req.body;
+            const {firstName, lastName, email, password, cpassword} = req.body;
 
             if(firstName == "") {
 
@@ -54,23 +55,36 @@ router.post("/register", (req,res) => {
         passwordRError.push("You must enter a password.");
     }
 
+    if (cpassword == "") {
+
+        passwordCError.push("Enter the password again.");
+    }
+
+    if (password != cpassword) {
+
+        passwordCError.push("The passwords must match.");
+    }
+
     if(!passwordRegex.test(password)) {
 
         passwordRError.push("Password must include at least 1 number and 1 capital letter.");
     }
 
+
         //If the user does not enter all the information
-        if(fNameError.length > 0 || lNameError.length > 0 || emailRError.length > 0 || passwordRError.length > 0) {
+        if(fNameError.length > 0 || lNameError.length > 0 || emailRError.length > 0 || passwordRError.length > 0 || passwordCError.length > 0) {
 
             res.render("User/register", {
                 fNameErrorMessage: fNameError,
                 lNameErrorMessage: lNameError,
                 emailRErrorMessage: emailRError,
                 passwordRErrorMessage: passwordRError,
+                passwordCErrorMessage: passwordCError,
                 fNameV: firstName,
                 lNameV: lastName,
                 emailV: email,
-                passwordV: password
+                passwordV: password,
+                passwordC: cpassword
             });
         }
 
@@ -253,15 +267,16 @@ router.get("/cart/:id", isAuthenticated, (req, res) => {
     .then((cart)=>{
         let purchaseOrderTotal = 0;
         let rentalOrderTotal = 0;
-        
+        const {moviesAndTVShows} = cart;
+
         for(i = 0; i < cart.moviesAndTVShows; i++) {
 
             purchaseOrderTotal += item[i].purchasePrice * item[i].quantity;
-            rentalOrderTotal += item.rentalPrice * item.quantity;
+            rentalOrderTotal += item[i].rentalPrice * item[i].quantity;
         }
-        const {moviesAndTVShows} = cart;
 
-        const userId = req.session.userInfo._id;
+        let userId = req.session.userInfo._id;
+
         res.render("User/cart",{
             userId,
             moviesAndTVShows,
@@ -269,18 +284,18 @@ router.get("/cart/:id", isAuthenticated, (req, res) => {
             rentalOrderTotal
         });
     })
-    .catch((err)=>{console.log(`Error happened when pulling cart from database: ${err}`);
-});
+    .catch((err)=>{console.log(`Error happened when pulling the cart from the database: ${err}`);
+    });
 
     }
 });
 
-router.get("/confirm", (req,res) => {
+router.get("/confirm", isAuthenticated, (req,res) => {
 
     res.render("User/confirmOrder");
 })
 
-router.get("/confirm/:id", (req,res) => {
+router.get("/confirm/:id", isAuthenticated, (req,res) => {
 
     cartModel.findOne({ userId: req.params.id})
     .then((cart) => {
